@@ -19,4 +19,10 @@ export class Modem {
   enabled: number;
   apn: string;
   ttyUSB: string;
+  username?: string;
+  passsword?: string;
+  phone?: number;
+  type?: string;
+  hasPin: boolean;
+  pin?: number;
 }
