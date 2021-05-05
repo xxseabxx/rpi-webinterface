@@ -10,36 +10,39 @@
 <div class="row" *ngIf="wifi.router.enabled">
   <div class="form-group col-12 col-sm-4">
     <label for="ssid" [translate]="'settings.internet.ssid'"></label>
-    <input type="text" class="form-control" [(ngModel)]="wifi.router.ssid" id="ssid" name="ssid" placeholder="{{ 'settings.internet.ssid' | translate}}"
-    required [maxlength]="32" #router_ssid="ngModel">
+    <input type="text" class="form-control" [(ngModel)]="wifi.router.ssid" id="ssid" name="ssid"
+      placeholder="{{ 'settings.internet.ssid' | translate}}" required [maxlength]="32" #router_ssid="ngModel">
   </div>
   <div class="form-group col-12 col-sm-4" [hidden]="wifi.router.wpa_type === 2">
-      <label for="password" [translate]="'settings.internet.password'"></label>
-      <input type="text" class="form-control" [(ngModel)]="wifi.router.password" id="password" name="password" placeholder="{{ 'settings.internet.password' | translate}}"
-      required [minlength]="8" [maxlength]="63" [pattern]="disallowedChars" #router_password="ngModel">
+    <label for="password" [translate]="'settings.internet.password'"></label>
+    <input type="text" class="form-control" [(ngModel)]="wifi.router.password" id="password" name="password"
+      placeholder="{{ 'settings.internet.password' | translate}}" required [minlength]="8" [maxlength]="63"
+      [pattern]="disallowedChars" #router_password="ngModel">
   </div>
   <!-- WPA2 select -->
   <div class="form-group col-12 col-sm-4">
     <label for="wpa_type" [translate]="'settings.internet.wpa_type'"></label>
-    <select [(ngModel)]="wifi.router.wpa_type" (change)="onRouterSelectChange($event?.target?.value)" id="wpa_type" name="wpa_type" class="custom-select" required>
-      <option [ngValue]="undefined" [translate]="'buttons.select' | translate: {value: 'settings.internet.wpa_type' | translate}" disabled></option>
+    <select [(ngModel)]="wifi.router.wpa_type" (change)="onRouterSelectChange($event?.target?.value)" id="wpa_type"
+      name="wpa_type" class="custom-select" required>
+      <option [ngValue]="undefined"
+        [translate]="'buttons.select' | translate: {value: 'settings.internet.wpa_type' | translate}" disabled></option>
       <option [ngValue]="0">WPA2 (default)</option>
       <!--<option [ngValue]="1">WEP</option>-->
       <option [ngValue]="2">No Password</option>
     </select>
   </div>
-  <div *ngIf="(router_ssid?.value && router_ssid?.value?.indexOf(' ') !== -1)"
-       class="alert alert-warning col-12" role="alert">
+  <div *ngIf="(router_ssid?.value && router_ssid?.value?.indexOf(' ') !== -1)" class="alert alert-warning col-12"
+    role="alert">
     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
     {{ 'error.spaces' | translate: { field: 'settings.internet.ssid' | translate} }}
   </div>
   <div *ngIf="(router_password?.value && router_password?.value?.indexOf(' ') !== -1)"
-       class="alert alert-warning col-12" role="alert">
+    class="alert alert-warning col-12" role="alert">
     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
     {{ 'error.spaces' | translate: { field: 'settings.internet.password' | translate} }}
   </div>
-  <div *ngIf="router_ssid.invalid && (router_ssid.dirty || router_ssid.touched)"
-       class="alert alert-danger col-12" role="alert">
+  <div *ngIf="router_ssid.invalid && (router_ssid.dirty || router_ssid.touched)" class="alert alert-danger col-12"
+    role="alert">
     <div *ngIf="router_ssid?.errors.required">
       {{ 'error.required' | translate: { field: 'settings.internet.ssid' | translate} }}
     </div>
@@ -47,8 +50,9 @@
       {{ 'error.length' | translate: { field: 'settings.internet.ssid' | translate} }}
     </div>
   </div>
-  <div *ngIf="router_password.invalid && (router_password.dirty || router_password.touched) && wifi.router.wpa_type !== 2"
-       class="alert alert-danger col-12" role="alert">
+  <div
+    *ngIf="router_password.invalid && (router_password.dirty || router_password.touched) && wifi.router.wpa_type !== 2"
+    class="alert alert-danger col-12" role="alert">
     <div *ngIf="router_password?.errors.required">
       {{ 'error.required' | translate: { field: 'settings.internet.password' | translate} }}
     </div>
@@ -85,13 +89,16 @@
   <div class="row">
     <div class="form-group col-12 col-sm-6">
       <label for="honeypiModemApn">{{ 'settings.internet.apn' | translate}}</label>
-      <input type="text" class="form-control" [(ngModel)]="wifi.modem.apn" id="honeypiModemApn" name="honeypiModemApn" placeholder="{{ 'settings.internet.apn' | translate}}" required>
+      <input type="text" class="form-control" [(ngModel)]="wifi.modem.apn" id="honeypiModemApn" name="honeypiModemApn"
+        placeholder="{{ 'settings.internet.apn' | translate}}" required> <label for="honeypiModemPhone">{{
+        'settings.internet.phone' | translate}}</label>
     </div>
     <!-- ttyUSB path -->
     <div class="form-group col-12 col-sm-6">
       <label for="ttyUSB" [translate]="'settings.internet.ttyUSB'"></label>
       <select [(ngModel)]="wifi.modem.ttyUSB" id="ttyUSB" name="ttyUSB" class="custom-select" required>
-        <option [ngValue]="undefined" [translate]="'buttons.select' | translate: {value: 'settings.internet.ttyUSB' | translate}" disabled></option>
+        <option [ngValue]="undefined"
+          [translate]="'buttons.select' | translate: {value: 'settings.internet.ttyUSB' | translate}" disabled></option>
         <option [ngValue]="'ttyUSB0'">ttyUSB0 (default)</option>
         <option [ngValue]="'ttyUSB1'">ttyUSB1</option>
         <option [ngValue]="'ttyUSB2'">ttyUSB2</option>
@@ -102,11 +109,68 @@
       </select>
     </div>
   </div>
+  <p>
+    <a class="text-danger" data-toggle="collapse" href="#collapseModem" role="button" aria-expanded="false"
+      aria-controls="collapseModem" [translate]="'settings.internet.collapseAP'"></a>
+  </p>
+  <div class="collapse" id="collapseModem">
+    <div class="row">
+      <div class="form-group col-12 col-sm-6">
+        <!--Phone-->
+        <label for="honeypiModemPhone">{{ 'settings.internet.phone' | translate}}</label>
+        <input type="text" class="form-control" [(ngModel)]="wifi.modem.phone" id="honeypiModemPhone"
+          name="honeypiModemPhone" placeholder="{{ 'settings.internet.phone' | translate}}">
+
+        <!-- username    -->
+        <label for="honeypiModemUserName">{{ 'settings.internet.username' | translate}}</label>
+        <input type="text" class="form-control" [(ngModel)]="wifi.modem.username" id="honeypiModemUsername"
+          name="honeypiModemUsername" placeholder="{{ 'settings.internet.username' | translate}}">
+
+      </div>
+
+      <div class="form-group col-12 col-sm-6">
+        <!-- type -->
+        <label for="honeypiModemType">{{ 'settings.internet.type' | translate}}</label>
+        <select [(ngModel)]="wifi.modem.type" id="type" name="type" class="custom-select" required>
+          <option [ngValue]="undefined"
+            [translate]="'buttons.select' | translate: {value: 'settings.internet.type' | translate}" disabled>
+          </option>
+          <option [ngValue]="sim800l">SIM800L (default)</option>
+        </select>
+
+        <!-- pwd   -->
+        <label for="honeypiModemPwd">{{ 'settings.internet.pwd' | translate}}</label>
+        <input type="text" class="form-control" [(ngModel)]="wifi.modem.pwd" id="honeypiModemPwd" name="honeypiModemPwd"
+          placeholder="{{ 'settings.internet.pwd' | translate}}">
+      </div>
+
+    </div>
+
+    <div class="row">
+      <div class="form-group col-12 col-sm-6">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" [(ngModel)]="wifi.modem.hasPin" id="enabledPin">
+          <label class="form-check-label" for="enablePibn" [translate]="'settings.internet.pin'"></label>
+        </div>
+
+
+        <!-- has pin -->
+        <ng-container *ngIf="wifi.modem.hasPin === true">
+          <input type="number" class="form-control" [(ngModel)]="wifi.modem.pin" id="honeypiModemPin"
+            name="honeypiModemPin" placeholder="{{ 'settings.internet.pin' | translate}}">
+        </ng-container>
+      </div>
+    </div>
+  </div>
+
+
+
 </ng-container>
 <hr />
 <h5 class="h5" [translate]="'settings.internet.isMobileConnected'"></h5>
 <p>
-  <button type="button" role="button" class="btn btn-warning btn-sm" (click)="checkInternet()" [disabled]="isLoading"  [class.spinner]="isLoading"  [translate]="'settings.internet.testConnection'"></button>
+  <button type="button" role="button" class="btn btn-warning btn-sm" (click)="checkInternet()" [disabled]="isLoading"
+    [class.spinner]="isLoading" [translate]="'settings.internet.testConnection'"></button>
 </p>
 <div *ngIf="checkInternetResponse">
   <div class="alert alert-success" role="alert" *ngIf="checkInternetResponse.connected">
@@ -117,7 +181,8 @@
     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
     <span [innerHTML]="'settings.internet.testError' | translate"></span>
   </div>
-  <pre class="pre-scrollable" *ngIf="!checkInternetResponse.connected && checkInternetResponse.content">{{checkInternetResponse.content | json}}</pre>
+  <pre class="pre-scrollable"
+    *ngIf="!checkInternetResponse.connected && checkInternetResponse.content">{{checkInternetResponse.content | json}}</pre>
   <!--
   <div class="alert alert-info" role="alert">
     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -127,7 +192,8 @@
 </div>
 <hr />
 <p>
-  <a class="text-danger" data-toggle="collapse" href="#collapseAP" role="button" aria-expanded="false" aria-controls="collapseAP" [translate]="'settings.internet.collapseAP'"></a>
+  <a class="text-danger" data-toggle="collapse" href="#collapseAP" role="button" aria-expanded="false"
+    aria-controls="collapseAP" [translate]="'settings.internet.collapseAP'"></a>
 </p>
 <div class="collapse" id="collapseAP">
   <div class="card card-body">
@@ -136,21 +202,24 @@
     <div class="row">
       <div class="form-group col-12 col-sm-6">
         <label for="honeypiWifissid">{{ 'settings.internet.ssid' | translate}}</label>
-        <input type="text" class="form-control" [(ngModel)]="wifi.honeypi.ssid" id="honeypiWifissid" name="honeypiWifissid" placeholder="{{ 'settings.internet.ssid' | translate}}"
-               [maxlength]="32" required>
+        <input type="text" class="form-control" [(ngModel)]="wifi.honeypi.ssid" id="honeypiWifissid"
+          name="honeypiWifissid" placeholder="{{ 'settings.internet.ssid' | translate}}" [maxlength]="32" required>
       </div>
       <div class="form-group col-12 col-sm-6">
         <label for="honeypiWifipassword">{{ 'settings.internet.password' | translate}}</label>
-        <input type="text" class="form-control" [(ngModel)]="wifi.honeypi.password" id="honeypiWifipassword" name="honeypiWifipassword" placeholder="{{ 'settings.internet.password' | translate}}"
-               [minlength]="8" [maxlength]="63" [pattern]="disallowedChars" required>
+        <input type="text" class="form-control" [(ngModel)]="wifi.honeypi.password" id="honeypiWifipassword"
+          name="honeypiWifipassword" placeholder="{{ 'settings.internet.password' | translate}}" [minlength]="8"
+          [maxlength]="63" [pattern]="disallowedChars" required>
       </div>
     </div>
     <hr />
     <h5 class="h5" [translate]="'settings.internet.isSurfstickConnected'"></h5>
     <p>
-      <button type="button" role="button" class="btn btn-warning btn-sm" (click)="checkDiag()" [disabled]="isLoadingAP"  [class.spinner]="isLoadingAP"  [translate]="'settings.internet.testDiag'"></button>
+      <button type="button" role="button" class="btn btn-warning btn-sm" (click)="checkDiag()" [disabled]="isLoadingAP"
+        [class.spinner]="isLoadingAP" [translate]="'settings.internet.testDiag'"></button>
     </p>
     <pre class="pre-scrollable" *ngIf="checkSurfstickResponse">{{checkSurfstickResponse}}</pre>
-    <button *ngIf="checkSurfstickResponse" class="btn btn-light btn-sm" type="button" role="button" (click)="copyMessage(checkSurfstickResponse)" [translate]="'settings.log.copy'"></button>
+    <button *ngIf="checkSurfstickResponse" class="btn btn-light btn-sm" type="button" role="button"
+      (click)="copyMessage(checkSurfstickResponse)" [translate]="'settings.log.copy'"></button>
   </div>
 </div>
