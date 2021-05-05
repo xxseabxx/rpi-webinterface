@@ -65,12 +65,54 @@
 
         // Modem/Surfstick
         if (isset($postJson["internet"]["modem"]) && isset($postJson["internet"]["modem"]["enabled"]) && $postJson["internet"]["modem"]["enabled"] == true) {
-            $modem = $postJson["internet"]["modem"];
-            if (isset($modem['apn']) && strlen($modem['apn']) > 0 && isset($modem["ttyUSB"]) && strlen($modem['ttyUSB']) > 0 ) {
-				$apn = escapeshellarg($modem["apn"]);
+
+          $modem = $postJson["internet"]["modem"];
+
+            if( $modem["enabled"] == 2){
+
+              if (isset($modem['apn']) && strlen($modem['apn']) > 0
+                    && isset($modem["ttyUSB"]) && strlen($modem['ttyUSB']) > 0
+                    && isset($modem["type"]) && strlen($modem['type']) > 0
+              ) {
+
+                //menatory
+                $apn = escapeshellarg($modem["apn"]);
                 $ttyUSB = escapeshellarg($modem["ttyUSB"]);
+                $type = escapeshellarg($modem["type"]);
+
+                $params = "-a"+$apn  . " -i" + $ttyUSB . " -m" + $type;
+
+
+                if (isset($modem['username']) && strlen($modem['username']) > 0 ) {
+                  $username = escapeshellarg($modem["username"]);
+                  $params .= " -u " . $username;
+                }
+
+                if (isset($modem['password']) && strlen($modem['password']) > 0 ){
+                  $password = escapeshellarg($modem["password"]);
+                  $params .= " -p" . $password;
+                }
+
+                if (isset($modem['phone']) && strlen($modem['phone']) > 0 ){
+                  $phoe = escapeshellarg($modem["phone"]);
+                  $params .= " -t" . $phone;
+                }
+
+                if (isset($modem['hasPin']) && ($modem['hasPin'] ==true) ){
+                  $pin = escapeshellarg($modem["pin"]);
+                  $params .= " -n" . $pin;
+                }
+                echo $params;
+                #shell_exec("sudo sh ".$GLOBALS['scriptsFolder']."/shell-scripts/connection.sh set-ppp $params &");
+            }else{
+              if (isset($modem['apn']) && strlen($modem['apn']) > 0 && isset($modem["ttyUSB"]) && strlen($modem['ttyUSB']) > 0 ) {
+				        $apn = escapeshellarg($modem["apn"]);
+                $ttyUSB = escapeshellarg($modem["ttyUSB"]);
+
                 shell_exec("sudo sh ".$GLOBALS['scriptsFolder']."/shell-scripts/connection.sh set-apn $apn $ttyUSB &");
             }
+            }
+
         }
 
         // 1-Wire GPIO for Ds18b20 Temperature Sensor
